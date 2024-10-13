@@ -399,46 +399,91 @@ parameters:
   - group: Alert
     items:
       - name: "Alert BAT"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
-        rule: 6
+        class: "enum"
+        rule: 3
         registers: [0x0BBD]
-        isstr: true
+        lookup:
+          - key: 0x00000000
+            value: "No Error"
+          - key: 0x00000001
+            value: "PcsBatVolOverFault"
+          - key: 0x00000002
+            value: "PcsBatVolUnderFault"
+          - key: 0x00000020
+            value: "PcsBatCommunicationFault"
+          - key: 0x00000040
+            value: "PcsBatTempSensorOpen"
 
       - name: "Alert GRID"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
-        rule: 6
+        class: "enum"
+        rule: 3
         registers: [0x0BC1]
-        isstr: true
+        lookup:
+          - key: 0x00000000
+            value: "No Error"
+          - key: 0x00000001
+            value: "GridLossFault"
+          - key: 0x00000004
+            value: "GridInstVoltHighFault"
+          - key: 0x00000010
+            value: "GridOverVoltFault"
+          - key: 0x00000020
+            value: "GridUnderVoltFault"
+          - key: 0x00000100
+            value: "GridOverFreqFault"
+          - key: 0x00000200
+            value: "GridUnderFreqFault"
 
       - name: "Alert OFF-GRID"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
-        rule: 6
+        class: "enum"
+        rule: 3
         registers: [0x0BC3]
-        isstr: true
+        lookup:
+          - key: 0x00000000
+            value: "No Error"
+          - key: 0x00000001
+            value: "UpsOVerPowerFault"
+          - key: 0x00000002
+            value: "GridConflictFault"
 
       - name: "Alert AC"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
-        rule: 6
+        class: "enum"
+        rule: 3
         registers: [0x0BC9]
-        isstr: true
+        lookup:
+          - key: 0x00000000
+            value: "No Error"
+          - key: 0x00000001
+            value: "HardwareFault"
+          - key: 0x00000004
+            value: "RInvInstCurrHighFault"
+          - key: 0x00000010
+            value: "TInvInstCurrHighFault"
+          - key: 0x00000080
+            value: "LeakCurrFault"
+          - key: 0x00000200
+            value: "GridRelayFault"
+          - key: 0x00000400
+            value: "UpsRelayFault"
+          - key: 0x00001000
+            value: "Relay4Fault"
+          - key: 0x00002000
+            value: "RUPSInstCurrHighFault"
+          - key: 0x00100000
+            value: "UPSInvHighVoltFault"
+          - key: 0x00200000
+            value: "UPSInvLowVoltFault"
+          - key: 0x00400000
+            value: "UPSInvHighFreqFault"
+          - key: 0x00800000
+            value: "UPSInvLowFreqFault"
 
       - name: "Alert DC"
-        class: ""
-        state_class: ""
-        uom: ""
-        scale: 1
-        rule: 6
+        class: "enum"
+        rule: 3
         registers: [0x0BC7]
-        isstr: true
+        lookup:
+          - key: 0x00000000
+            value: "No Error"
+          - key: 0x00010000
+            value: "BusAllVoltSwUnderFault"
