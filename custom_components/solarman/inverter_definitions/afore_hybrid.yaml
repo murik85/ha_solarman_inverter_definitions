@@ -1,6 +1,5 @@
 default:
-  code:
-    read: 0x04
+  code: 0x04
   update_interval: 15
 
 
