@@ -1,3 +1,9 @@
+default:
+  code:
+    read: 0x04
+  update_interval: 15
+
+
 parameters:
   - group: Solar
     items:
@@ -35,7 +41,7 @@ parameters:
         scale: 0.01
         rule: 1
         registers: [0x022F]
-        icon: "mdi:current-dcr"
+        icon: "mdi:current-dc"
 
       - name: "P_pv1"
         class: "power"
@@ -61,33 +67,13 @@ parameters:
         uom: "W"
         scale: 1
         rule: 3
-        registers: [0x022A]
-        icon: "mdi:solar-power"
-
-      - name: "MPPT_mode"
-        rule: 1
-        registers: [0x09C9]
-        isstr: true
-        lookup:
-          - key: 0
-            value: "Stop"
-          - key: 1
-            value: "Stand-by"
-          - key: 2
-            value: "Boost scan"
-          - key: 3
-            value: "Bus scan"
-          - key: 4
-            value: "Boost MPPT operation"
-          - key: 5
-            value: "Bus MPPT operation"
-          - key: 6
-            value: "Centralized Bus operation"
+        registers: [0x022A, 0x0229]
         icon: "mdi:solar-power"
 
   - group: Battery
     items:
       - name: "State_bat"
+        update_interval: 60
         rule: 1
         registers: [0x07D0]
         isstr: true
@@ -116,7 +102,7 @@ parameters:
         uom: "W"
         scale: 1
         rule: 4
-        registers: [0x07D8]
+        registers: [0x07D8, 0x07D7]
         icon: "mdi:battery"
 
       - name: "V_bat"
@@ -181,7 +167,7 @@ parameters:
         uom: "W"
         scale: 1
         rule: 4
-        registers: [0x05EA]
+        registers: [0x05EA, 0x05E9]
         icon: "mdi:home-lightning-bolt"
 
   - group: Grid
@@ -220,7 +206,7 @@ parameters:
         scale: 0.01
         rule: 2
         registers: [0x01FE]
-        icon: "mdi:home-lightning-bolt"
+        icon: "mdi:current-ac"
 
       - name: "F_grid"
         class: "frequency"
@@ -229,7 +215,7 @@ parameters:
         scale: 0.01
         rule: 1
         registers: [0x0201]
-        icon: "mdi:home-lightning-bolt"
+        icon: "mdi:sine-wave"
 
       - name: "P_inv"
         class: "power"
@@ -237,7 +223,7 @@ parameters:
         uom: "W"
         scale: 1
         rule: 4
-        registers: [0x020B]
+        registers: [0x020B, 0x020A]
         icon: "mdi:home-lightning-bolt"
 
       - name: "PF_inv"
@@ -255,7 +241,7 @@ parameters:
         uom: "W"
         scale: 1
         rule: 4
-        registers: [0x0212]
+        registers: [0x0212, 0x0211]
         icon: "mdi:home-lightning-bolt"
 
       - name: "P_load"
@@ -264,12 +250,13 @@ parameters:
         uom: "W"
         scale: 1
         rule: 4
-        registers: [0x0224]
+        registers: [0x0224, 0x0223]
         icon: "mdi:home-lightning-bolt"
 
   - group: Inverter
     items:
-      - name: "Running Status"
+      - name: "Running State"
+        update_interval: 300
         rule: 1
         registers: [0x09C4]
         isstr: true
@@ -302,7 +289,7 @@ parameters:
             value: "Open loop"
           - key: 14
             value: "Sampling calibration"
-        icon: "mdi:home-lightning-bolt"
+        icon: "mdi:play-circle-outline"
 
       - name: "Inverter radiator temperature"
         class: "temperature"
@@ -323,6 +310,7 @@ parameters:
         icon: "mdi:thermometer"
 
   - group: Total Energy
+    update_interval: 300
     items:
       - name: "E to GRID day"
         class: "energy"
@@ -339,7 +327,7 @@ parameters:
         uom: "kWh"
         scale: 0.1
         rule: 3
-        registers: [0x03FB]
+        registers: [0x03FB, 0x03FA]
         icon: "mdi:transmission-tower"
 
       - name: "E from GRID day"
@@ -357,7 +345,7 @@ parameters:
         uom: "kWh"
         scale: 0.1
         rule: 3
-        registers: [0x03FD]
+        registers: [0x03FD, 0x03FC]
         icon: "mdi:transmission-tower"
 
       - name: "E PV day"
@@ -366,7 +354,7 @@ parameters:
         uom: "kWh"
         scale: 0.1
         rule: 3
-        registers: [0x03EF]
+        registers: [0x03EF, 0x03EE]
         icon: "mdi:solar-power"
 
       - name: "E PV"
@@ -375,17 +363,8 @@ parameters:
         uom: "kWh"
         scale: 0.1
         rule: 3
-        registers: [0x0403]
+        registers: [0x0403, 0x0402]
         icon: "mdi:solar-power"
-
-      - name: "E Inv"
-        class: "energy"
-        state_class: "total"
-        uom: "kWh"
-        scale: 0.1
-        rule: 3
-        registers: [0x03F7]
-        icon: "mdi:lightning-bolt-circle"
 
       - name: "E to Load"
         class: "energy"
@@ -393,7 +372,7 @@ parameters:
         uom: "kWh"
         scale: 0.1
         rule: 3
-        registers: [0x03FF]
+        registers: [0x03FF, 0x03FE]
         icon: "mdi:home-lightning-bolt-outline"
 
   - group: Alert
@@ -401,7 +380,7 @@ parameters:
       - name: "Alert BAT"
         class: "enum"
         rule: 3
-        registers: [0x0BBD]
+        registers: [0x0BBD, 0x0BBC]
         lookup:
           - key: 0x00000000
             value: "No Error"
@@ -417,7 +396,7 @@ parameters:
       - name: "Alert GRID"
         class: "enum"
         rule: 3
-        registers: [0x0BC1]
+        registers: [0x0BC1, 0x0BC0]
         lookup:
           - key: 0x00000000
             value: "No Error"
@@ -437,7 +416,7 @@ parameters:
       - name: "Alert OFF-GRID"
         class: "enum"
         rule: 3
-        registers: [0x0BC3]
+        registers: [0x0BC3, 0x0BC2]
         lookup:
           - key: 0x00000000
             value: "No Error"
@@ -449,7 +428,7 @@ parameters:
       - name: "Alert AC"
         class: "enum"
         rule: 3
-        registers: [0x0BC9]
+        registers: [0x0BC9, 0x0BC8]
         lookup:
           - key: 0x00000000
             value: "No Error"
@@ -481,9 +460,53 @@ parameters:
       - name: "Alert DC"
         class: "enum"
         rule: 3
-        registers: [0x0BC7]
+        registers: [0x0BC7, 0x0BC6]
         lookup:
           - key: 0x00000000
             value: "No Error"
           - key: 0x00010000
             value: "BusAllVoltSwUnderFault"
+
+  - group: Settings
+    code:
+      read: 0x03
+      write: 0x06
+    update_interval: 15
+    items:
+      - name: "BAT Type"
+        platform: select
+        rule: 1
+        registers: [0x0BB8]
+        lookup:
+          - key: 0
+            value: "No Battery"
+          - key: 1
+            value: "Lithium"
+          - key: 2
+            value: "Lead Acid"
+
+      - name: "Meter Type"
+        platform: select
+        rule: 1
+        registers: [0x00D3]
+        lookup:
+          - key: 0
+            value: "No Meter"
+          - key: 1
+            value: "Current Transformer"
+
+#      - name: "EMS Mode"
+#        platform: select
+#        rule: 1
+#        registers: [0x09C4]
+#        lookup:
+#          - key: 0
+#            value: "SelfUse"
+#          - key: 1
+#            value: "ChrFst"
+#          - key: 2
+#            value: "SellFst"
+#          - key: 3
+#            value: "Maintain"
+#          - key: 4
+#            value: "CmdChr"
