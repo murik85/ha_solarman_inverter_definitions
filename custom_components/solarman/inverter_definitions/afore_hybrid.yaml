@@ -348,7 +348,7 @@ parameters:
 
       - name: "E PV day"
         class: "energy"
-        state_class: "total"
+        state_class: "total_increasing"
         uom: "kWh"
         scale: 0.1
         rule: 3
@@ -357,7 +357,7 @@ parameters:
 
       - name: "E PV"
         class: "energy"
-        state_class: "total"
+        state_class: "total_increasing"
         uom: "kWh"
         scale: 0.1
         rule: 3
@@ -366,7 +366,7 @@ parameters:
 
       - name: "E to Load"
         class: "energy"
-        state_class: "total"
+        state_class: "total_increasing"
         uom: "kWh"
         scale: 0.1
         rule: 3
@@ -493,18 +493,18 @@ parameters:
           - key: 1
             value: "Current Transformer"
 
-#      - name: "EMS Mode"
-#        platform: select
-#        rule: 1
-#        registers: [0x09C4]
-#        lookup:
-#          - key: 0
-#            value: "SelfUse"
-#          - key: 1
-#            value: "ChrFst"
-#          - key: 2
-#            value: "SellFst"
-#          - key: 3
-#            value: "Maintain"
-#          - key: 4
-#            value: "CmdChr"
+      - name: "EMS Mode"
+        platform: select
+        rule: 1
+        registers: [0x09C4]
+        lookup:
+          - key: 0
+            value: "SelfUse"
+          - key: 1
+            value: "ChrFst"
+          - key: 2
+            value: "SellFst"
+          - key: 3
+            value: "Maintain"
+          - key: 4
+            value: "CmdChr"
